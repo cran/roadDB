@@ -6,13 +6,14 @@
 \alias{roadDB-package}
 \title{roadDB: Access Data from the ROCEEH Out of Africa Database (ROAD)}
 \description{
-Provides an R interface to the ROCEEH Out of Africa Database (ROAD) (\url{https://www.roceeh.uni-tuebingen.de/roadweb/smarty_road_simple_search.php}), a comprehensive resource for archaeological, anthropological, paleoenvironmental and geographic data from Africa and Eurasia dating from 3,000,000 to 20,000 years BP. The package allows users to retrieve data from the online database at different levels of detail and customize search requests. Functions return `data frame` objects compatible with other R packages used in prehistoric and paleoenvironmental science, supporting reproducible workflows as an input provider.
+Provides an R interface to the ROCEEH Out of Africa Database (ROAD) (\url{https://www.roceeh.uni-tuebingen.de/roadweb/smarty_road_simple_search.php}), a comprehensive resource for archaeological, anthropological, paleoenvironmental and geographic data from Africa and Eurasia dating from 3,000,000 to 20,000 years BP. The package allows users to retrieve data from the online database at different levels of detail and customize search requests. Functions return data frame objects compatible with other R packages used in prehistoric and paleoenvironmental science, supporting reproducible workflows as an input provider.
 }
 \author{
 \strong{Maintainer}: Christian Sommer \email{christian.sommer@uni-tuebingen.de} (\href{https://orcid.org/0000-0001-9062-0876}{ORCID})
 
 Authors:
 \itemize{
+  \item Christian Sommer \email{christian.sommer@uni-tuebingen.de} (\href{https://orcid.org/0000-0001-9062-0876}{ORCID})
   \item Zara Kanaeva \email{zara.kanaeva@geographie.uni-tuebingen.de} (\href{https://orcid.org/0000-0002-1989-1494}{ORCID})
   \item Jesper Borre Pedersen \email{jesper-borre.pedersen@ifu.uni-tuebingen.de} (\href{https://orcid.org/0000-0002-3468-0986}{ORCID})
   \item Timo Patrick Streicher \email{timo.streicher@googlemail.com} (\href{https://orcid.org/0009-0009-2193-4308}{ORCID})

@@ -1,5 +1,7 @@
 #source("./R/login.R")
 
+db_source_select <- "road_server"
+
 # column names
 cm_locality_idlocality <- "locality_id"
 cm_locality_type <- "locality_type"
@@ -85,38 +87,75 @@ road_run_query <- function(query)
   # con <- dbConnect(RPostgres::Postgres(), dbname = "roceeh", host="134.2.216.14", 
   #                  port=5432, user=rstudioapi::askForPassword("Database username"), 
   #                  password=rstudioapi::askForPassword("Database password"))
-  
-  max_attempts <- 5
-  attempt <- 1
-  result <- NULL
-  
-  while (attempt <= max_attempts && is.null(result)) {
-  
-    con <- dbConnect(RPostgres::Postgres(), dbname = "road", host = "134.2.216.13", 
-                     port = 5432, user = "road_user", password = "road")
 
-    # run query
-    result <- tryCatch({dbGetQuery(conn = con, statement = query) #, keepalives = 1, keepalives_idle = 1200)
-              }, error = function(e) {
-                           if (attempt == max_attempts) {
-                             stop("Final attempt failed: ", e$message)
-                           }
-                           # Wait 2^attempt seconds (2, 4, 8, 16...)
-                           wait <- 2^attempt
-                           message(paste("Attempt", attempt, "of", max_attempts, "..."))
-                           # message(sprintf("Attempt %d failed. Retrying in %d seconds...", attempt, wait))
-                           Sys.sleep(wait)
-                           return(NULL)
-             })
-  
-    attempt <- attempt + 1
-    #message(paste("Attempt", attempt, "of", max_attempts, "..."))
+  if (db_source_select == "road_server")
+  {
+    max_attempts <- 5
+    attempt <- 1
+    result <- NULL
+    con <- NULL
+
+    while (attempt <= max_attempts && is.null(result)) {
+
+      tryCatch({con <- dbConnect(RPostgres::Postgres(), dbname = "road", host = "134.2.216.13", 
+                      port = 5432, user = "road_user", password = "road") 
+               }, error = function(e) {
+                 message("roadDB could not connect to the server. Please check your internet connection
+                         or check https://github.com/sommergeo/roadDB#cloud-database-status")
+                 return(NULL)
+               })
+        
+      # run query
+      if (!is.null(con)) {
+        result <- tryCatch({dbGetQuery(conn = con, statement = query) #, keepalives = 1, keepalives_idle = 1200)
+                  }, error = function(e) {
+                              stop("Attempt failed, the database message is: ", e$message)
+                              
+                              #if (attempt == max_attempts) {
+                                #stop("Final attempt failed: ", e$message)
+                              #}
+                              return(NULL)
+                  })
+
+        dbDisconnect(con)
+        con <- NULL
+      }
+      # sometimes the db connection could be established but the db is too busy, then
+      # result is null as if db were unreachable
+      if (is.null(result)) {
+        # Wait 2^attempt seconds (2, 4, 8, 16...)
+        wait <- 2^attempt
+        message(paste("Attempt", attempt, "of", max_attempts, "..."))
+        Sys.sleep(wait)
+        attempt <- attempt + 1
+      }
+      else break
+    }
+    if (attempt > max_attempts) stop("Error: no database connection.")
+  }
+  else if (db_source_select == "local_sqlite")
+  {
+    con <- dbConnect(RSQLite::SQLite(), dbname = "data/road_db.sqlite")
+    result <- dbGetQuery(conn = con, statement = query)
+    dbDisconnect(con)
+  }
+  else
+  {
+    stop("Invalid database source selected.")
   }
 
   # replace all possible "NULL" values with NA
-  result[result == ""] <- NA
-  result[result == -1] <- NA
-  result[result == "undefined"] <- NA
+  # Apply replacements only to columns of matching type to avoid
+  # coercion errors (e.g. charToDate) on Date or other non-character columns
+  char_cols <- names(result)[sapply(result, is.character)]
+  num_cols  <- names(result)[sapply(result, is.numeric)]
+  for (col in char_cols) {
+    result[[col]][result[[col]] == ""]          <- NA
+    result[[col]][result[[col]] == "undefined"] <- NA
+  }
+  for (col in num_cols) {
+    result[[col]][result[[col]] == -1] <- NA
+  }
 
   # "unknown" is a correct value of 'transport_distance', we dont want replace it.
   # if ("transport_distance" %in% colnames(result))

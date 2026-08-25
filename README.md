@@ -1,61 +1,115 @@
-# roadDB  <a href="https://www.hadw-bw.de/en/research/research-center/roceeh"><img src="docs/roadDB_logo.png" align="right" height="138" /></a>
-Access data from the [ROCEEH Out of Africa Database (ROAD)](https://www.roceeh.uni-tuebingen.de/roadweb/smarty_road_simple_search.php).
+# roadDB  <img src="docs/roadDB_logo.png" align="right" height="138" />
+This package provides an R interface to the [ROCEEH Out of Africa Database (ROAD)](<https://www.roceeh.uni-tuebingen.de/roadweb/smarty_road_simple_search.php>), a comprehensive resource for archaeological, anthropological, paleoenvironmental and geographic data from Africa and Eurasia dating between 3,000,000 and 20,000 years BP.
+The package is avaliable on [CRAN](https://doi.org/10.32614/CRAN.package.roadDB) and allows users to retrieve data from the online database at different levels of detail and customize search requests.
+Functions return `data frame` objects compatible with other R packages used in prehistoric and paleoenvironmental science, supporting reproducible workflows as an input provider.  
 
-Offers an R interface to ROAD, wrapping SQL queries to facilitate data access and supply data frames for analysis in R.
+The package is maintained by [Christian Sommer](https://orcid.org/0000-0001-9062-0876), [Zara Kanaeva](https://orcid.org/0000-0002-1989-1494), [Timo Streicher](https://orcid.org/0009-0009-2193-4308) and [Jesper Borre Pedersen](https://orcid.org/0000-0002-3468-0986) at the Research Center [The Role of Culture in Early Expansions of Humans (ROCEEH)](https://www.hadw-bw.de/roceeh) and is funded by the [Heidelberg Academy of Sciences and Humanties](https://en.hadw-bw.de/).
 
-## Install
+
+## :cloud: Database status
+This package provides online access to a regularly updated snapshot of the ROAD database.
+A stable internet connection is required when working with `roadDB`.
+
+Current status:  :green_circle: **Online**
+
+Current snapshot:  :date: **2026-06-16**
+
+:construction: A scheduled downtime is planned for 2026-08-10 to 2026-08-14.
+
+:construction: A scheduled downtime is planned for 2026-09-16.
+
+
+## :notebook: Tutorial
+An introduction to the package with example workflows can be found at [https://www.sommergeo.com/roadDB/tutorial.html](https://www.sommergeo.com/roadDB/tutorial.html)
+
+
+## :unlock: License
+This package is licensed under the **Creative Commons Attribution-ShareAlike 4.0 International ([CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/))**.
+Contents retrieved from the ROAD database are published under the same license and should be cited as
+
+> Kandel, A. W., Sommer, C., Kanaeva, Z., Bolus, M., Bruch, A. A., Groth, C., Haidle, M. N., Hertler, C., Heß, J., Malina, M., Märker, M., Hochschild, V., Mosbrugger, V., Schrenk, F., & Conard, N. J. (2023). The ROCEEH Out of Africa Database (ROAD): A large-scale research database serves as an indispensable tool for human evolutionary studies. PLOS ONE, 18(8), e0289513. https://doi.org/10.1371/journal.pone.0289513
+
+## :information_source: Using roadDB responsibly
+ROAD is continuously growing and updated, and therefore a comprehensive, but not complete archive of early human prehistory. 
+All data are curated by researchers and trained research assistants, but still may contain errors. 
+Information is recorded closely following the interpretations of the original literature and does not necessarily reflect the views of the database curators.
+
+Please critically evaluate results obtained via roadDB, verify them against the original literature, retrieve references using `road_get_publications()` and check for new publications not yet entered.
+
+roadDB covers the most frequently used tables and columns of ROAD. For additional fields, complex SQL queries, or full database access, please register and log in to [ROAD](https://www.roceeh.uni-tuebingen.de/roadweb/smarty_road_simple_search.php).
+
+If you find errors, please contact info@roceeh.net.
+
+## :computer: Functionality
+
+
+### Installation
 ```
 # CRAN installation
-# install.packages(roadDB)
+install.packages(roadDB)
 
 # Github installation
+# Windows users are required to install Rtools: https://cran.r-project.org/bin/windows/Rtools/
 install.packages("devtools")
 devtools::install_github("sommergeo/roadDB")
 ```
 
-## Database version
-This package provides access to the ROCEEH Out of Africa Database (ROAD).  
-It uses a regularly updated snapshot of the database; the current version was updated on **2025-12-01**.
 
-## Structure
-The roadDB package has three main levels of detail (LOD) that follow a hierarchical order: Locality, Assemblage and Date. A locality can have multiple assemblages, and each assemblage can have multiple dates associated with it.
+### Structure
+The roadDB package has three main levels of detail (LOD) that follow a hierarchical order: (1) Localities, (2) Assemblages and (3) Dates & Publications. For example, a locality can have multiple assemblages, and each assemblage can have multiple dates associated with it.
 
 <p align="center">
-<img src="docs/levels_of_detail.svg" alt="Illustration of the three levels of the roadDB R-package from top to bottom: Locality, Assemblage and Date" height="250">
+<img src="docs/materials/levels_of_detail.svg" alt="Illustration of the three levels of the roadDB R-package from top to bottom: Locality, Assemblage and Object" height="250">
 </p>
+
+*Fig: Three Levels of Detail (LODs) for data retrieval.*
 
 Users can query information at different LODs using dedicated functions that follow the `road_get_*` naming convention. These return dataframes where each row represents an item at the requested granularity and includes attribute columns relevant to those items.
 
 An extensive set of arguments can be applied to all `road_get_*` functions, allowing users to refine their queries and tailor the results to their needs.
 
-As the ROAD database is exceptionally rich in information at the assemblage level, there are subordinate functions for querying human remains, archaeology, palaeofauna and palaeobotany.
+As the ROAD database offers exceptionally rich information at the assemblage level, there are subordinate functions for querying human remains, archaeology, palaeofauna and palaeobotany.
+
+<p align="center">
+<img src="docs/materials/functions_and_arguments.png" alt="Crosstable of compatibility between roadDB functions and related arguments" height="250">
+</p>
+
+*Fig: Crosstable of functions and compatible arguments. [Download](https://www.sommergeo.com/roadDB/functions_and_arguments.pdf)*
 
 
-## Functions
-### Core functions
-- 1st level of detail:
-	- road_get_localities()
-- 2nd level of detail:
-	- road_get_assemblages()
-	- road_get_human_remains()
-	- road_get_paleofauna()
-	- road_get_paleobotany()
-	- archaeology-related:
-		- road_get_lithic_typologies()
-		- road_get_lithic_raw_materials()
-		- road_get_organic_tools()
-		- road_get_symbolic_artifacts()
-		- road_get_features()
-		- road_get_miscellaneous_finds()
-- 3rd level of detail:
-	- road_get_dates()
-	- road_get_publications()
 
-### Helper functions
-- road_list_argument_values()
-- road_summarize_archaeology()
+### Functions
+```
+# 1st level of detail:
+	road_get_localities()
+
+# 2nd level of detail:
+	road_get_assemblages()
+	road_get_human_remains()
+	road_get_paleofauna()
+	road_get_plantremains()
+
+	## archaeology-related:
+	road_get_lithic_typologies()
+	road_get_lithic_raw_materials()
+	road_get_organic_tools()
+	road_get_symbolic_artifacts()
+	road_get_features()
+	road_get_miscellaneous_finds()
+
+# 3rd level of detail:
+	road_get_dates()
+	road_get_publications()
+	
+# Helper functions:
+	road_list_argument_values()
+	road_summarize_archaeology()
+```
+
 
 ### Arguments
+
+#### General arguments
 The following arguments are optional and can be used with every `road_get_*` function to constrain queries.
 
 | Argument                            | Type      | ROAD table / attribute                               | Search type | Example                                       |
@@ -71,6 +125,7 @@ The following arguments are optional and can be used with every `road_get_*` fun
 | `cultural_period`                   | character | archaeological_stratigraphy / cultural_period        | exact       | "Middle Stone Age"                            |
 
 
+#### Specific arguments
 The following arguments are optional and can be used with the corresponding `road_get_*` function to constrain queries.
 
 | Argument                            | Type      | ROAD table / attribute                               | Search type | Example(s)                                    |
@@ -90,12 +145,13 @@ The following arguments are optional and can be used with the corresponding `roa
 | `plant_species`                     | character | plant_taxonomy / species                             | exact       |  "Potamogeton gramineus L."                   |
 | `fauna_genus`                       | character | taxonomical_classification / genus                   | exact       |  "Lemniscomys", "Hipposideros"                |
 | `fauna_species`                     | character | paleofauna / species                                 | exact       |  "cf. germanicus", "atapuerquensis"           |
-| `bibtex`                            | character | publication / edition / publication_source           | exact       |  "F", "T", "False", "TRUE         "           |
+| `bibtex`                            | character | publication / edition / publication_source           | exact       |  "TRUE", "FALSE"                              |
 
 
-The following table provides an overview of return attributes.
+### Result tables
+The following table provides an overview of returned attributes.
 
-| Attribute                                 | Funktion                                     | Type                 |
+| Attribute                                 | Function                                     | Type                 |
 | ----------------------------------------- | -------------------------------------------- | -------------------- |
 | `locality_id`                             |  `road_get_*`                                | character            |
 | `continent`                               |  `road_get_*`                                | character            |
@@ -168,10 +224,3 @@ The following table provides an overview of return attributes.
 | `dating_method`                           |  `road_get_dates`                            | character            |
 | `laboratory_idlaboratory`                 |  `road_get_dates`                            | character            |
 | `publication`                             |  `road_get_publications`                     | character            |
-
-## License
-
-This package is licensed under the **Creative Commons Attribution-ShareAlike 4.0 International [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)**.
-Contents retrieved from the ROAD database are published under the same license and should be cited as
-
-Kandel, A. W., Sommer, C., Kanaeva, Z., Bolus, M., Bruch, A. A., Groth, C., Haidle, M. N., Hertler, C., Heß, J., Malina, M., Märker, M., Hochschild, V., Mosbrugger, V., Schrenk, F., & Conard, N. J. (2023). The ROCEEH Out of Africa Database (ROAD): A large-scale research database serves as an indispensable tool for human evolutionary studies. PLOS ONE, 18(8), e0289513. https://doi.org/10.1371/journal.pone.0289513
