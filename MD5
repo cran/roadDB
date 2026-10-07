@@ -1,6 +1,6 @@
-77b321cd6bd6ddb393111603c7c4c3b4 *DESCRIPTION
+b45a523db53a57d285a4ed26100c6f61 *DESCRIPTION
 3e4afce978639ce9d80e63df789b48d5 *NAMESPACE
-ffd34aae08e96b4454d2fb79ebc9fe76 *NEWS.md
+45bd64888c7a445c522616094aaf7bd1 *NEWS.md
 547e78ade2b7a7fc0f6e52563c7940dc *R/get_archaeology.R
 209facc6400eadd6cc14db0e5c588394 *R/get_assemblages.R
 d4d4292b958231b29cfb43c695560333 *R/get_dates.R
@@ -14,8 +14,8 @@ f6f14b55be1c2e4baa74a4a9428fa971 *R/get_sql.R
 9bbd854ceaa0872b66f62facd90ce129 *R/help_funcs.R
 1c4ebdc8e7a5fd0fa8f857f6c5e08b7b *R/roadDB-package.R
 0c36591dda48ecf0383248db7755f0d3 *R/startup_message.R
-edd31ab50f482276bceea7381ba92516 *README.md
-2d77fbb79dadca83410cc64838a41dfc *inst/CITATION
+a0cbf47790cb8db504618ca0fc140c91 *README.md
+e647f3e9bb78e895cdbe018b1940b847 *inst/CITATION
 79036ef41799c34f99526a6914850efb *man/get_publication_references.Rd
 d93ea009c47c24a3dc277818d404a3eb *man/roadDB-package.Rd
 ec8f4fd7e46b428c5dd158968a2a4dc5 *man/road_get_assemblages.Rd
