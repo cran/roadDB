@@ -1,6 +1,6 @@
-b45a523db53a57d285a4ed26100c6f61 *DESCRIPTION
+59df441e1a31956677ceb51af1be6079 *DESCRIPTION
 3e4afce978639ce9d80e63df789b48d5 *NAMESPACE
-45bd64888c7a445c522616094aaf7bd1 *NEWS.md
+2d049fb477fa063588f8f1f49e4d809e *NEWS.md
 547e78ade2b7a7fc0f6e52563c7940dc *R/get_archaeology.R
 209facc6400eadd6cc14db0e5c588394 *R/get_assemblages.R
 d4d4292b958231b29cfb43c695560333 *R/get_dates.R
@@ -11,13 +11,13 @@ a4d2131447dc518269640e3c816e7990 *R/get_paleofauna.R
 2743a1ae410a573c010faa9738de9b57 *R/get_plantremains.R
 3ae327060c34bd16bdbbbed3393a43e2 *R/get_publications.R
 f6f14b55be1c2e4baa74a4a9428fa971 *R/get_sql.R
-9bbd854ceaa0872b66f62facd90ce129 *R/help_funcs.R
+cd41f6bd79bc5e56b40b4831d7efb6fa *R/help_funcs.R
 1c4ebdc8e7a5fd0fa8f857f6c5e08b7b *R/roadDB-package.R
 0c36591dda48ecf0383248db7755f0d3 *R/startup_message.R
-a0cbf47790cb8db504618ca0fc140c91 *README.md
-e647f3e9bb78e895cdbe018b1940b847 *inst/CITATION
+27b1a8a94b285970ac297b5b84b115d9 *README.md
+9f71aa847ef44e043f30d24f71a9ea49 *inst/CITATION
 79036ef41799c34f99526a6914850efb *man/get_publication_references.Rd
-d93ea009c47c24a3dc277818d404a3eb *man/roadDB-package.Rd
+06e9f7318c8252a0899eeee35f2d0a75 *man/roadDB-package.Rd
 ec8f4fd7e46b428c5dd158968a2a4dc5 *man/road_get_assemblages.Rd
 9e808b8fbb09ee4c7a985b36fb2b9ee7 *man/road_get_dates.Rd
 7f871b0d42d4255317ec1218dbe78726 *man/road_get_features.Rd
